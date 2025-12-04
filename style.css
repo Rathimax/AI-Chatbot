@@ -11,7 +11,7 @@
  * 6.0  STATE-BASED CLASSES
  * 7.0  KEYFRAME ANIMATIONS
  * 8.0  RESPONSIVE DESIGN
- * 9.0  DARK THEME & SETTINGS PANEL
+ * 9.0  DARK THEME & SETTINGS PANEL (IMPROVED)
  */
 
 /* ===== 1.0 FONT IMPORT ===== */
@@ -113,7 +113,7 @@ input[type="range"]::-moz-range-thumb { width: 20px; height: 20px; background: v
 
 /* ===== 4.0 COMPONENT STYLES ===== */
 
-/* --- HEADER STYLES (NEW) --- */
+/* --- HEADER STYLES --- */
 .app-header {
   background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(20px);
@@ -125,6 +125,10 @@ input[type="range"]::-moz-range-thumb { width: 20px; height: 20px; background: v
 .avatar-header {
   background: #e5e7eb;
   font-size: 20px;
+  /* Ensure centering */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .main-menu-button { background: none; border: none; padding: 0.25rem; border-radius: 0.375rem; }
@@ -152,7 +156,13 @@ input[type="range"]::-moz-range-thumb { width: 20px; height: 20px; background: v
 .message-text { font-size: 1rem; line-height: 1.6; word-wrap: break-word; overflow-wrap: break-word; }
 .avatar { width: 40px; height: 40px; border-radius: 50%; background-color: #e5e7eb; color: #4b5563; display: flex; align-items: center; justify-content: center; font-weight: 500; flex-shrink: 0; }
 .message-ai .message-bubble { background-color: #ffffff; color: var(--text-primary); border: 1px solid var(--border); border-bottom-left-radius: 6px; }
-.message-user { align-self: flex-end; flex-direction: row-reverse; }
+
+/* --- FIX: User Message Alignment --- */
+.message-user { 
+  align-self: flex-end; 
+  margin-left: auto; /* Forces the container to the right side */
+  flex-direction: row-reverse; 
+}
 .message-user .message-bubble { background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%); color: #ffffff; border: none; border-bottom-right-radius: 6px; }
 .message-user .avatar { background-color: #6366f1; color: #ffffff; }
 
@@ -278,7 +288,7 @@ input[type="range"]::-moz-range-thumb { width: 20px; height: 20px; background: v
 
 html.dark {
   /* Richer, deeper dark theme colors */
-  --primary: #070b15; /* Slate 900 */
+  --primary: #0f172a; /* Slate 900 */
   --secondary: #1e293b; /* Slate 800 */
   --secondary-hover: #334155; /* Slate 700 */
   --text-primary: #f1f5f9; /* Slate 100 */
@@ -299,10 +309,10 @@ html.dark {
 
 /* Global Overrides for Dark Mode */
 html.dark body { 
-  background: linear-gradient(135deg, var(--primary) 0%, #01030b 50%, var(--primary) 100%); 
+  background: linear-gradient(135deg, var(--primary) 0%, #020617 50%, var(--primary) 100%); 
 }
 html.dark .app-header {
-  background: rgba(5, 7, 14, 0.85); /* Dark slate for header */
+  background: rgba(15, 23, 42, 0.85); /* Dark slate for header */
 }
 html.dark .app-header img {
   filter: invert(1) brightness(2); /* Logo fix: makes black logo white */
@@ -317,7 +327,7 @@ html.dark .input-wrapper {
   border-color: var(--border);
 }
 html.dark .history-panel { 
-  background-color: #080b12; 
+  background-color: #111827; /* Darker than primary */
   border-right-color: var(--border); 
 }
 html.dark .dropdown-menu { 
@@ -337,6 +347,7 @@ html.dark .close-history-button:hover {
   color: var(--accent); 
   border-color: var(--accent); 
 }
+/* Fix for the capsules in dark mode */
 html.dark .input-tag {
   background-color: var(--secondary);
   color: var(--text-secondary);
@@ -407,9 +418,47 @@ html.dark .temperature-button.active {
 
 .settings-button.apply { background-color: var(--accent); border-color: var(--accent); color: #ffffff; }
 .settings-button.apply:hover { background-color: var(--accent-hover); border-color: var(--accent-hover); }
-/* ===== 10.0 ENHANCED MARKDOWN & CONTENT STYLING ===== */
+/* ===== 10.0 TABLE & MARKDOWN STYLING ===== */
 
-/* Better Lists inside Chat Bubbles */
+/* Table Styling */
+.message-text table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+  background-color: transparent;
+}
+
+.message-text th, 
+.message-text td {
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  text-align: left;
+}
+
+.message-text th {
+  background-color: var(--secondary);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.message-text tr:nth-child(even) {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+/* Dark Mode adjustments for tables */
+html.dark .message-text th {
+  background-color: var(--secondary-hover);
+  border-color: var(--border);
+}
+html.dark .message-text td {
+  border-color: var(--border);
+}
+html.dark .message-text tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+/* Lists inside messages */
 .message-text ul, .message-text ol {
   margin-bottom: 1rem;
   padding-left: 1.5rem;
@@ -417,103 +466,5 @@ html.dark .temperature-button.active {
 .message-text li {
   margin-bottom: 0.25rem;
 }
-.message-text ul {
-  list-style-type: disc;
-}
-.message-text ol {
-  list-style-type: decimal;
-}
-/* Better Code Blocks */
-.message-text pre {
-  background: #1e293b;
-  color: #e2e8f0;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  overflow-x: auto;
-  margin: 0.75rem 0;
-  font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
-  font-size: 0.85rem;
-  border: 1px solid rgba(255,255,255,0.1);
-}
-
-.message-text code {
-  background: rgba(0,0,0,0.1);
-  padding: 0.2em 0.4em;
-  border-radius: 0.25rem;
-  font-family: monospace;
-  font-size: 0.9em;
-  color: var(--accent-hover);
-}
-
-/* Dark mode adjustment for inline code */
-html.dark .message-text code {
-  background: rgba(255,255,255,0.15);
-  color: #86efac;
-}
-
-/* Tables in AI responses */
-.message-text table {
-  border-collapse: collapse;
-  width: 100%;
-  margin: 1rem 0;
-  font-size: 0.9rem;
-}
-
-.message-text th, 
-.message-text td {
-  border: 1px solid var(--border);
-  padding: 0.5rem;
-  text-align: left;
-}
-
-.message-text th {
-  background-color: var(--secondary);
-  font-weight: 600;
-}
-/* Better Code Blocks */
-.message-text pre {
-  background: #1e293b;
-  color: #e2e8f0;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  overflow-x: auto;
-  margin: 0.75rem 0;
-  font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
-  font-size: 0.85rem;
-  border: 1px solid rgba(255,255,255,0.1);
-}
-
-.message-text code {
-  background: rgba(0,0,0,0.1);
-  padding: 0.2em 0.4em;
-  border-radius: 0.25rem;
-  font-family: monospace;
-  font-size: 0.9em;
-  color: var(--accent-hover);
-}
-
-/* Dark mode adjustment for inline code */
-html.dark .message-text code {
-  background: rgba(255,255,255,0.15);
-  color: #86efac;
-}
-
-/* Tables in AI responses */
-.message-text table {
-  border-collapse: collapse;
-  width: 100%;
-  margin: 1rem 0;
-  font-size: 0.9rem;
-}
-
-.message-text th, 
-.message-text td {
-  border: 1px solid var(--border);
-  padding: 0.5rem;
-  text-align: left;
-}
-
-.message-text th {
-  background-color: var(--secondary);
-  font-weight: 600;
-}
+.message-text ul { list-style-type: disc; }
+.message-text ol { list-style-type: decimal; }
