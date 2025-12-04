@@ -288,9 +288,9 @@ input[type="range"]::-moz-range-thumb { width: 20px; height: 20px; background: v
 
 html.dark {
   /* Richer, deeper dark theme colors */
-  --primary: #0f172a; /* Slate 900 */
-  --secondary: #1e293b; /* Slate 800 */
-  --secondary-hover: #334155; /* Slate 700 */
+  --primary: #080d18; /* Slate 900 */
+  --secondary: #060d16; /* Slate 800 */
+  --secondary-hover: #1f2833; /* Slate 700 */
   --text-primary: #f1f5f9; /* Slate 100 */
   --text-secondary: #94a3b8; /* Slate 400 */
   --text-muted: #64748b; /* Slate 500 */
@@ -309,10 +309,10 @@ html.dark {
 
 /* Global Overrides for Dark Mode */
 html.dark body { 
-  background: linear-gradient(135deg, var(--primary) 0%, #020617 50%, var(--primary) 100%); 
+  background: linear-gradient(135deg, var(--primary) 0%, #040714 50%, var(--primary) 100%); 
 }
 html.dark .app-header {
-  background: rgba(15, 23, 42, 0.85); /* Dark slate for header */
+  background: rgba(4, 6, 12, 0.85); /* Dark slate for header */
 }
 html.dark .app-header img {
   filter: invert(1) brightness(2); /* Logo fix: makes black logo white */
